@@ -15,3 +15,37 @@ variable "istio_disabled" { default = true }
 variable "min_nodes_per_zone" { default = 1 }
 
 variable "max_nodes_per_zone" { default = 5 }
+
+
+variable "flux_settings" {
+  description = "Customize or override flux helm chart values"
+  type        = map(string)
+  default     = {}
+}
+
+variable "flux_helm_operator_settings" {
+  description = "Customize or override flux helm operator chart values"
+  type        = map(string)
+  default     = {}
+}
+
+variable "reloader_settings" {
+  description = "Customize reloader helm chart"
+  type        = map(string)
+  default     = {}
+}
+
+variable "velero_settings" {
+  description = "Customize or override velero helm chart values"
+  type        = map(string)
+  default     = {}
+}
+
+variable "enable_velero" {
+  default = true
+}
+
+variable "enable_flux" {
+  default = false
+}
+
