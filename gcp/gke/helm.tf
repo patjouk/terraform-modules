@@ -22,12 +22,6 @@ data "helm_repository" "stable" {
   url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
-data "helm_repository" "vmware_tanzu" {
-  count = var.enable_velero ? 1 : 0
-  name  = "vmware-tanzu"
-  url   = "https://vmware-tanzu.github.io/helm-charts"
-}
-
 resource "helm_release" "reloader" {
   name       = "reloader"
   repository = data.helm_repository.stable.metadata.0.name
@@ -84,24 +78,4 @@ resource "helm_release" "fluxcd" {
     }
   }
 
-}
-
-resource "helm_release" "velero" {
-  count      = var.enable_velero ? 1 : 0
-  name       = "velero"
-  repository = data.helm_repository.vmware_tanzu.0.name
-  chart      = "vmware-tanzu/velero"
-  namespace  = "velero"
-
-  dynamic "set" {
-    iterator = item
-    for_each = local.velero_settings
-
-    content {
-      name  = item.key
-      value = item.value
-    }
-  }
-
-  depends_on = [google_container_cluster.primary]
 }

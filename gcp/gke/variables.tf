@@ -35,16 +35,6 @@ variable "reloader_settings" {
   default     = {}
 }
 
-variable "velero_settings" {
-  description = "Customize or override velero helm chart values"
-  type        = map(string)
-  default     = {}
-}
-
-variable "enable_velero" {
-  default = true
-}
-
 variable "enable_flux" {
   default = false
 }
