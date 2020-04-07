@@ -5,7 +5,6 @@ locals {
   reloader_settings = merge(local.reloader_defaults, var.reloader_settings)
 
   flux_helm_operator_defaults = {
-    "createCRD"          = "true"
     "helm.versions"      = "v3"
     "git.ssh.secretName" = "flux-git-deploy"
   }
