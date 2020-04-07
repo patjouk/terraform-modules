@@ -59,6 +59,7 @@ resource "helm_release" "flux_helm_operator" {
   }
 
   depends_on = [google_container_cluster.primary]
+  skip_crds  = true
 }
 
 resource "helm_release" "fluxcd" {
