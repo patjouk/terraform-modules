@@ -39,3 +39,6 @@ variable "enable_flux" {
   default = false
 }
 
+variable "flux_git_url" {
+  default = ""
+}
