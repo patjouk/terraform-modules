@@ -1,4 +1,9 @@
 
+data "google_container_cluster" "cluster" {
+  name     = var.gke_cluster
+  location = var.location
+}
+
 resource "google_service_account" "gsa" {
   account_id = var.name
   project    = var.project_id
@@ -20,7 +25,7 @@ resource "google_project_iam_member" "iam-logging" {
 
 resource "kubernetes_service_account" "ksa" {
   metadata {
-    namespace = "default"
+    namespace = var.namespace
     name = var.name
     annotations = {
       "iam.gke.io/gcp-service-account" = google_service_account.gsa.email
@@ -28,7 +33,7 @@ resource "kubernetes_service_account" "ksa" {
   }
   automount_service_account_token = true
   depends_on = [
-    var.gke_cluster,
+    data.google_container_cluster.cluster,
   ]
 }
 

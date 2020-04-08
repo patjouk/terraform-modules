@@ -16,6 +16,6 @@ variable "flux_git_url" {
 
 variable "gke_cluster" {}
 
-variable "gke_cluster_location" {}
+variable "location" {}
 
 variable "namespace" { default = "default" }

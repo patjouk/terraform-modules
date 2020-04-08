@@ -14,7 +14,7 @@ locals {
 
 data "google_container_cluster" "cluster" {
   name     = var.gke_cluster
-  location = var.gke_cluster_location
+  location = var.location
 }
 
 data "google_client_config" "current" {
