@@ -64,14 +64,14 @@ resource "helm_release" "reloader" {
     }
   }
 
-  depends_on = [var.gke_cluster]
+  depends_on = [data.google_container_cluster.cluster]
 }
 
 resource "helm_release" "flux_helm_operator" {
   name       = "helm-operator"
   repository = data.helm_repository.fluxcd.metadata.0.name
   chart      = "fluxcd/helm-operator"
-  namespace  = "fluxcd"
+  namespace  = var.namespace
 
   dynamic "set" {
     iterator = item
@@ -83,7 +83,7 @@ resource "helm_release" "flux_helm_operator" {
     }
   }
 
-  depends_on = [var.gke_cluster]
+  depends_on = [data.google_container_cluster.cluster]
   skip_crds  = true
 }
 
@@ -91,7 +91,7 @@ resource "helm_release" "fluxcd" {
   name       = "flux"
   repository = data.helm_repository.fluxcd.metadata.0.name
   chart      = "fluxcd/flux"
-  namespace  = "fluxcd"
+  namespace  = var.namespace
 
   dynamic "set" {
     iterator = item
@@ -103,9 +103,4 @@ resource "helm_release" "fluxcd" {
     }
   }
 
-}
-resource "kubernetes_namespace" "flux" {
-  metadata {
-    name = "fluxcd"
-  }
 }
