@@ -1,9 +1,4 @@
 locals {
-  reloader_defaults = {
-    "reloader.deployment.image.tag" = "v0.0.58"
-  }
-  reloader_settings = merge(local.reloader_defaults, var.reloader_settings)
-
   flux_helm_operator_defaults = {
     "helm.versions"      = "v3"
     "git.ssh.secretName" = "flux-git-deploy"
@@ -46,25 +41,6 @@ data "helm_repository" "fluxcd" {
 data "helm_repository" "stable" {
   name = "stable"
   url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
-resource "helm_release" "reloader" {
-  name       = "reloader"
-  repository = data.helm_repository.stable.metadata.0.name
-  chart      = "stable/reloader"
-  namespace  = var.namespace
-
-  dynamic "set" {
-    iterator = item
-    for_each = local.reloader_settings
-
-    content {
-      name  = item.key
-      value = item.value
-    }
-  }
-
-  depends_on = [data.google_container_cluster.cluster]
 }
 
 resource "helm_release" "flux_helm_operator" {

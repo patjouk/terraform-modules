@@ -10,12 +10,6 @@ variable "flux_helm_operator_settings" {
   default     = {}
 }
 
-variable "reloader_settings" {
-  description = "Customize reloader helm chart"
-  type        = map(string)
-  default     = {}
-}
-
 variable "flux_git_url" {
   default = ""
 }
