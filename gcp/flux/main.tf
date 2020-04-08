@@ -17,6 +17,11 @@ locals {
   flux_settings = merge(local.flux_defaults, var.flux_settings)
 }
 
+data "google_container_cluster" "cluster" {
+  name     = var.gke_cluster
+  location = var.gke_cluster_location
+}
+
 data "google_client_config" "current" {
 }
 
@@ -25,17 +30,17 @@ provider "helm" {
 
   kubernetes {
     host                   = var.gke_cluster.endpoint
-    cluster_ca_certificate = base64decode(var.gke_cluster.master_auth.0.cluster_ca_certificate)
-    client_key             = base64decode(var.gke_cluster.master_auth.0.client_key)
-    client_certificate     = base64decode(var.gke_cluster.master_auth.0.client_certificate)
+    cluster_ca_certificate = base64decode(data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate)
+    client_key             = base64decode(data.google_container_cluster.cluster.master_auth.0.client_key)
+    client_certificate     = base64decode(data.google_container_cluster.cluster.master_auth.0.client_certificate)
     token                  = data.google_client_config.current.access_token
     load_config_file       = false
   }
 }
 
 data "helm_repository" "fluxcd" {
-  name  = "fluxcd"
-  url   = "https://charts.fluxcd.io"
+  name = "fluxcd"
+  url  = "https://charts.fluxcd.io"
 }
 
 data "helm_repository" "stable" {

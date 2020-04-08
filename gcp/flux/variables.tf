@@ -21,3 +21,5 @@ variable "flux_git_url" {
 }
 
 variable "gke_cluster" {}
+
+variable "gke_cluster_location" {}
