@@ -2,12 +2,16 @@ locals {
   flux_helm_operator_defaults = {
     "helm.versions"      = "v3"
     "git.ssh.secretName" = "flux-git-deploy"
+    "serviceAccount.create" = "false"
+    "serviceAccount.name" = var.account_name
   }
   flux_helm_operator_settings = merge(local.flux_helm_operator_defaults, var.flux_helm_operator_settings)
 
   flux_defaults = {
     "git.ciSkip" = "true"
     "git.url"    = var.flux_git_url
+    "serviceAccount.create" = "false"
+    "serviceAccount.name" = var.account_name
   }
   flux_settings = merge(local.flux_defaults, var.flux_settings)
 }
