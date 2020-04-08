@@ -21,3 +21,5 @@ variable "location" {}
 variable "namespace" { default = "default" }
 
 variable "account_name" { default = "flux" }
+
+variable "path" { default = "" }
