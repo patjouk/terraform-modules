@@ -63,9 +63,8 @@ resource "helm_release" "reloader" {
 }
 
 resource "helm_release" "flux_helm_operator" {
-  count      = 1
   name       = "helm-operator"
-  repository = data.helm_repository.fluxcd.0.metadata.0.name
+  repository = data.helm_repository.fluxcd.metadata.0.name
   chart      = "fluxcd/helm-operator"
   namespace  = "fluxcd"
 
@@ -84,9 +83,8 @@ resource "helm_release" "flux_helm_operator" {
 }
 
 resource "helm_release" "fluxcd" {
-  count      = 1
   name       = "flux"
-  repository = data.helm_repository.fluxcd.0.metadata.0.name
+  repository = data.helm_repository.fluxcd.metadata.0.name
   chart      = "fluxcd/flux"
   namespace  = "fluxcd"
 
