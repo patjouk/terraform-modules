@@ -52,7 +52,7 @@ resource "helm_release" "reloader" {
   name       = "reloader"
   repository = data.helm_repository.stable.metadata.0.name
   chart      = "stable/reloader"
-  namespace  = "kube-system"
+  namespace  = var.namespace
 
   dynamic "set" {
     iterator = item
