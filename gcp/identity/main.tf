@@ -2,6 +2,7 @@
 data "google_container_cluster" "cluster" {
   name     = var.gke_cluster
   location = var.location
+  project    = var.project_id
 }
 
 resource "google_service_account" "gsa" {
