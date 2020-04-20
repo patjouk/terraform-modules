@@ -33,15 +33,15 @@ resource "google_bigquery_dataset" "dataset" {
       role           = lookup(access.value, "role", null)
       special_group  = lookup(access.value, "special_group", null)
       user_by_email  = lookup(access.value, "user_by_email", null)
+    }
+  }
 
-      dynamic "view" {
-        for_each = lookup(access.value, "view", [])
-        content {
-          dataset_id = view.value.dataset_id
-          project_id = view.value.project_id
-          table_id   = view.value.table_id
-        }
-      }
+  dynamic "view" {
+    for_each = var.views
+    content {
+      dataset_id = view.value.dataset_id
+      project_id = view.value.project_id
+      table_id   = view.value.table_id
     }
   }
 

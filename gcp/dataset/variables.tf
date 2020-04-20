@@ -43,3 +43,6 @@ variable "extra_labels" {
   default = {}
 }
 
+variable "views" {
+  default = []
+}
